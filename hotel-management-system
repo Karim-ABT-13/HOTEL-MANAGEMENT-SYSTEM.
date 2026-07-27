@@ -1,0 +1,105 @@
+## HOTEL MANAGEMENT SYSTEM 
+# bissmillah
+
+def welcome():
+    print("=" * 90)
+    print("                             HOTEL MANAGEMENT SYSTEM")
+    print("=" * 90)
+welcome()
+
+## now, I start working in main menu options;
+def main_menu():
+    print("=====MAIN MENU=====")
+    main_menu = ["1. Show Available Rooms","2. Book A Room","3. Check-in Guest","4. Check-out Guest","5. Search For a Guest","6. Show Bookings","7. Update Booking","8. Cancel Booking","9. Exit"]
+
+    for i in main_menu:
+        print(i)
+
+main_menu()
+
+print()
+choose = str(input("Choose an Option : "))
+print()
+print()
+
+## I finished the main menu options, and now I'll start working on options;
+# the first option: "show available rooms";
+def show_available_rooms():
+    print("=====SHOW AVAILABLE ROOMS=====")
+    rooms = {
+        
+        "room1" : {
+            "Room's Number" : 101,
+            "Room's Type" : "single",
+            "Availability" : "Available"
+        },
+
+        "room2" : {
+            "Room's Number" : 102,
+            "Room's Type" : "Double",
+            "Availability" : "Booked"
+        },
+
+        "room3" : {
+            "Room's Number" : 103,
+            "Room's Type" : "Double",
+            "Availability" : "Booked"
+        }
+    }
+    
+    for room_name, room_info in rooms.items():
+        print()
+        print(room_name)
+        print(room_info["Room's Number"])
+        print(room_info["Room's Type"])
+        print(room_info["Availability"])
+        print("_" * 47)
+        
+        
+show_available_rooms()
+
+print()
+
+combacke_to_main_menu = input("Print 'yes' if you Want to comback to Main Menu, and Print 'no' if you want to still here; :  ")
+    
+while combacke_to_main_menu == "yes":
+    main_menu()
+    choose = str(input("choose an option: "))
+
+while combacke_to_main_menu == "no":
+    show_available_rooms()
+    combacke_to_main_menu = input("Print 'yes' if you want to comback to main menu, and print 'no' if you want to still here; : ")
+
+print()
+
+## now, I'll make the second option on the list of main menu, i make a input i write on it: "what the room's socity do you want"
+# and after that i'll show the choices of this
+
+def book_a_room():
+    print("=====BOOK A ROOM=====")
+    print()
+    
+    costumer_name = input("enter the customer name: ")
+    whats_the_room_do_you_want = input("what's the room do you want?  single or double ? : ")
+    
+    with open("hotel.txt", "a")as file:
+        file.write(costumer_name + "\n")
+        
+    if whats_the_room_do_you_want == "single":
+        print()
+
+    print( rooms["Room's Social"] )  
+    if "Room's Social" == "single":
+            print("available room , price : 120$ for one night.")
+book_a_room()
+
+while True :
+    if choose == "1":
+        show_available_rooms()
+        
+    elif choose == "2":
+        book_a_room()
+        
+    else:
+        print("error ! no service defonde!!")
+
