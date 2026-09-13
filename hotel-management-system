@@ -2,410 +2,815 @@
 
 ## HOTEL MANAGEMENT SYSTEM 
 # bissmillah
-from colorama import Fore, Style, init
-init()
 
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.prompt import Prompt, IntPrompt, Confirm
+from rich.progress import Progress
+import time
+from rich.live import Live
+from rich.layout import Layout
+from rich.tree import Tree
+from rich.text import Text
+from rich.markdown import Markdown
+from rich.syntax import Syntax
+from rich.columns import Columns
+
+console = Console()
+
+## I will write the rooms with all his details;;
+rooms = { 
+"101" : {
+#Single room: 
+
+"type_room" : "single",
+"availability" : "available",
+"price" : 50,
+"capacity" : 1,
+"size" : "18 m2",
+"beds" : "1 Single Bed",
+"bathroom" : "Private",
+"view" : "City View",
+"balcony" : "No",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"tv" : "Yes",
+"breakfast" : "Optional"
+
+},
+
+"102" : {
+#Single room:
+
+"type_room" : "single",
+"availability" : "booked",
+"price" : 50,
+"capacity" : 1,
+"size" : "18 m2",
+"beds" : "1 Single Bed",
+"bathroom" : "Private",
+"view" : "City View",
+"balcony" : "No",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"tv" : "Yes",
+"breakfast" : "Optional"
+
+},
+
+"103" : {
+#double room:
+
+"type_room" : "double",
+"availability" : "available",
+"price" : 80,
+"capacity" : 2,
+"size" : "25 m2",
+"beds" : "1 Double Bed",
+"bathroom" : "Private",
+"view" : "City View",
+"balcony" : "No",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"breakfast" : "Included"
+},
+"104" : {
+#double room:
+
+"type_room" : "double",
+"availability" : "booked",
+"price" : 80,
+"capacity" : 2,
+"size" : "25 m2", 
+"beds" : "1 Double Bed",
+"bathroom" : "Private",
+"view" : "City View",
+"balcony" : "No",
+"wi-Fi" : "Free", 
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"breakfast" : "Included"
+},
+
+"201" : {
+#twin room:
+
+"type_room" : "twin",
+"availability" : "booked",
+"price" : 90,
+"capacity" : 2,
+"size" : "27 m2",
+"beds" : "2 Single Beds",
+"bathroom" : "Private",
+"view" : "Garden View",
+"balcony" : "No",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"breakfast" : "Included"
+}, 
+
+"202" : {
+#twin room:
+
+"type_room" : "twin",
+"availability" : "available",
+"price" : 90,
+"capacity" : 2,
+"size" : "27 m2",
+"beds" : "2 Single Beds",
+"bathroom" : "Private",
+"view" : "Garden View",
+"balcony" : "No",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"breakfast" : "Included"
+},
+
+"203" : {
+#suite room:
+
+"type_room" : "suite",
+"availability" : "available",
+"price" : 150,
+"capacity" : 4,
+"size" : "45 m2",
+"beds" : "King Bed + Sofa Bed",
+"bathroom" : "Private",
+"view" : "Mountain View",
+"balcony" : "Yes",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"mini Bar" : "Yes",
+"living Room" : "Yes",
+"room Service" : "Yes",
+"breakfast" : "Included"
+},
+
+"204" : {
+#suite room:
+
+"type_room" : "suite",
+"avilability" : "booked",
+"price" : 15,
+"capacity" : 3,
+"size" : "45 m2",
+"beds" : "King Bed + Sofa Bed",
+"bathroom" : "Private",
+"view" : "Mountain View",
+"balcony" : "Yes",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"mini Bar" : "Yes",
+"living Room" : "Yes",
+"room Service" : "Yes",
+"breakfast" : "Included"
+},
+
+"301" : {
+#VIP room:
+
+"type_room" : "VIP",
+"availability" : "available",
+"price" : 250,
+"capacity" : 4,
+"size" : "60 m2",
+"beds" : "King Bed + Sofa Bed",
+"bathroom" : "Luxury Private",
+"view" : "Mountain View",
+"balcony" : "Private",
+"wi-Fi" : "Free",
+"air Conditioning" : "Yes",
+"smart TV" : "Yes",
+"mini Bar" : "Yes",
+"safe" : "Yes",
+"living Room" : "Yes",
+"room Service" : "Yes",
+"breakfast" : "Included"
+}
+}
 
 def welcome():
-    print(Fore.CYAN + "=" * 90 + Style.RESET_ALL)
+print("=" * 90 )
 
-    print(Fore.GREEN + "                             HOTEL MANAGEMENT SYSTEM" + Style.RESET_ALL)
+print( " HOTEL MANAGEMENT SYSTEM" )
 
-    print(Fore.CYAN + "=" * 90 + Style.RESET_ALL)
+print ("=" * 90 )
 
 welcome() 
 
 ## now, I start working in main menu options;
+
 def main_menu():
-    main_menu = [Fore.YELLOW + "1. Show Available Rooms","2. Book A Room","3. Check-in Guest","4. Check-out Guest","5. Search For a Guest","6. Show Bookings","7. Update Booking","8. Cancel Booking","9. Exit" + Style.RESET_ALL]
+print("1. Show Available Rooms")
+print("2. Book a Room")
+print("3. Cancel Booking")
+print("4. Check-in Guest")
+print("5. Check-out Guest")
+print("6. Search For a Guest")
+print("7. Update Booking")
+print("8. Exit")
 
-    for i in main_menu:
-        print(i)
-
-    choose = str(input("Choose an Option: "))
-
+choice = input("Enter your choice: ")
 main_menu()
 
-
-## I finished the main menu options, and now I'll start working on options;
-# the first option: "show available rooms";
+## make the first choice 'show available rooms';
+##
 
 def show_available_rooms():
-    print()
-
-    rooms = {
-
-        "first room" : {
-            "room number" : 1,
-            "room type" : "double",
-            "availability" : "available",
-            "price/ night" : 15 
-        },
-
-        "second room" : {
-            "room number" : 2,
-            "room type" : "single",
-            "availability" : "available",
-            "price/ night" : 20
-        },
-
-        "third room" : {
-            "room number" : 3,
-            "room type" : "single",
-            "availability" : "booked",
-            "price/ night" : 20
-        },
-
-        "fourth room" : {
-            "room number" : 4,
-            "room type" : "double",
-            "availability" : "booked",
-            "price/ night" : 15
-        },
-
-        "fivthe room" : {
-            "room number" : 5,
-            "room type" : "suite",
-            "availability" : "available",
-            "price/ night" : 60
-        },
-
-        "sixthe room" : {
-            "room number" : 6,
-            "room type" : "VIP",
-            "availability" : "available",
-            "price/ night" : 100
-        },
-
-        "seventh room" : {
-            "room number" : 7,
-            "room type" : "suite VIP",
-            "availability" : "available",
-            "price/ night" : 170
-        },
-
-        "eighth room" : {
-            "room number" : 8,
-            "room type" : "suite",  
-            "availability" : "booked",
-            "price/ night" : 60
-        }, 
-
-        "ninthe room" : {
-            "room number" : 9,
-            "room type" : "suite VIP",
-            "availability" : "booked",
-            "price/ night" : 170
-        },
-
-        "ten room" : {
-            "room number" : 10,
-            "room type" : "VIP",
-            "availability" : "available",
-            "price/ night" : 100
-        }
-
-    }
-
-    for room_name, room_info in rooms.items():
-        print(Fore.YELLOW , (room_name) , Style.RESET_ALL)
-        print(Fore.CYAN , (room_info) , Style.RESET_ALL)
-        print("-" * 60)
-        print()
-
-
-    def quations():
-        do_you_want_to_book_this_room = input("Do you want to book this room  yes/no: ")
-        if do_you_want_to_book_this_room == "yes":
-            print("-" * 60)
-
-            print(Fore.BLACK + "Loading for informations..." + Style.RESET_ALL)
-            print()
-
-            costumer_name = input("Enter the costumer name (your name) :  ")
-            costumer_age = input("Enter your age here :  ")
-            time_of_staying = float(input("How many nights you want to book this room:  "))
-            print("This os the total price : ", time_of_staying * 80, )
-            print()
-
-            type_of_paying = input("How would you want to pay:  cash or credit card? :  ")
-            if type_of_paying == "cash":
-                print()
-
-                print(Fore.LIGHTGREEN_EX + "Thank you sir, you have to go to the cashier for paying, and then. They gives you the keys of the room you'd booked." + Style.RESET_ALL)
-                comback_to_mainMenu = input("Print 'yes' if you want to cone back to the main menu:  ")
+print()
 
-                if comback_to_mainMenu == "yes":
-                    print()
-                    main_menu()
+console.print(
+Panel(" SHOW AVAILABLE ROOMS")
+)
+print()
 
-                    while comback_to_mainMenu != "yes":
-                        print(Fore.RED + "Error! no coumond found, try again!!" + Style.RESET_ALL)
-                        comback_to_mainMenu = input("print 'yes' if you want to come back to the main menu: ")
+for room_name, room_info in rooms.items():
+print("=" * 30)
+print(f"\n{room_name}\n")
 
-                        if comback_to_mainMenu == "yes":
-                            print()
-                            main_menu()
+for feature, value in room_info.items():
+print(f"{feature} : {value}")
 
-                        else:
-                            print(Fore.RED + "Sorry, no coumond defoud. Try again!!" + Style.RESET_ALL)
-                            print()
+print()
+print("=" * 40)
 
+book_a_room_ = input("Book a room? [y/n] : ")
+if book_a_room_ == "y":
+###
+def book_a_room():
+
+console.print(
+Panel(" BOOK A ROOM")
+)
+print() 
+
+guest_number = int(input("Number of Guests: ")) 
+print()
+
+if guest_number == 1:
+print()
+print("Available rooms for you: ")
+
+for room_name, room_info in rooms.items():
+if room_info.get("availability") == "available":
+print("-", room_name, "'", room_info.get("type_room"), "'")
+
+elif guest_number == 2 or guest_number == 3:
+print()
+print("Available rooms for you: ")
+
+for room_name, room_info in rooms.items():
+if room_info.get("availability") == "available" and (room_info.get("capacity") == 2 or room_info.get("capacity") == 3): 
+print("-", room_name, "'", room_info.get("type_room"), "'")
+
+elif guest_number == 3 or guest_number == 4 :
+print()
+print("Available rooms for you: ")
+
+for room_name, room_info in rooms.items():
+if room_info.get("availability") == "available" and (room_info.get("capacity") == 3 or room_info.get("capacity") == 4):
+print("-", room_name, "'", room_info.get("type_room"), "'")
+
+print()
+
+choose_a_room = Prompt.ask("Choose room number: ") 
+print()
+
+for room_name, room_info in rooms.items():
+if choose_a_room == room_name :
+print("=" * 25, " ROOM DETAILS ", "=" * 25) 
+print()
+
+for room_name, room_info in rooms.items():
+for feature, value in room_info.items():
+if choose_a_room == room_name:
+print(f"{feature} : {value}")
 
-            elif type_of_paying == "credit card":
-                print(Fore.BLACK + "Loading for input credit card informations..." + Style.RESET_ALL)
-                print()
-
-                enter = input("Enter the number of your card here:_ ")
-                enter_the_password = input("Rnter the password here:_ ")
-
-                print(Fore.LIGHTGREEN_EX + "You payed successfuly. Now you should go to the cashier to gives you the keys of the room you booked, have you a great day/ good night." + Style.RESET_ALL)
-                print()
-
-                comback_to_mainMenu = input("Print 'yes' if you want to come back to the main menu: ")
-                if comback_to_mainMenu == "yes" :
-                    main_menu()
-
-                while comback_to_mainMenu != "yes" :
-                    print()
-
-                    print(Fore.RED + "Sorry, No coumond found try again!" + Style.RESET_ALL)
-                    comback_to_mainMenu = input("Print 'yes' if you want to come back to the main menu: ")
-                    print()
-
-                    if comback_to_mainMenu == "yes":
-                        main_menu()
-
-                    else :
-                        print(Fore.RED + "Sorry, no coumonf defound. Please try again." + Style.RESET_ALL)
-                        print()
-
-                        comback_to_mainMenu = input("print 'yes' if you want to come back to the main menu: ")
-
-        elif do_you_want_to_book_this_room == "no":
-            comback_to_mainMenu = input("print 'yes' if you want to comback to the main menu: ")
-
-            if comback_to_mainMenu == "yes":
-                main_menu()
-
-            while comback_to_mainMenu != "yes":
-                comback_to_mainMenu = input("Print 'yes' if you want to come back to the main menu: ")
-                if comback_to_mainMenu == "yes":
-                    main_menu()
-                    break
-
-                else:    
-                    comback_to_mainMenu = input("Print 'yes' if you want to come back to the main menu: ")
-
-## this is the function of the quastion after the user want to book a room;;
-
-    do_you_want_to_book_a_room = input("Do you want to book a room?  yes/no: ")
-    if do_you_want_to_book_a_room == "yes":
-        print()
-
-        how_is_the_room = input("How it's the room you want?  single/double/suite/VIP/suite VIP? : ")
-        if how_is_the_room == "single":
-            print()
-
-            print("======== SINGLE ROOM ========")
-
-            for room_name, room_info in rooms.items():
-                if room_info["availability"] == "available" and room_info["room type"] == "single":
-                    print(Fore.YELLOW , (room_name) , Style.RESET_ALL)
-                    print(Fore.CYAN , (room_info) , Style.RESET_ALL)
-                    print()
-
-                    show_exelences = input("Do you want to see what did you got when you book this room?  yes/no: ")
-                    if show_exelences == "yes":
-                        exelences = {
-                            "1- Capacity" : "1 Guest",
-                            "2- BED" : "Single Bed",                        
-                            "3- Bathroom" : "Private ",
-                            "4- TV" : "Standard TV",
-                            "5- WI-FI" : "Free",
-                            "6- Air Condition" : "Yes",
-                            "7- Desk" : "Yes",
-                            "8- Wardrobe" : "Yes",
-                            "9- Room Service" : "Available",
-                            "10- Brekfast" : "Optional",
-                            "11- View" : "Standard",
-                            "12- Price" : "50$ / night",
-                        }
-
-                        for feature, value in exelences.items():
-                            print(feature, ":", value)
-                    
-                        quations()
-
-                    
-
-        elif how_is_the_room == "double" : 
-            print()
-            print(Fore.BLUE + "======== DOUBLE ROOM ========" + Style.RESET_ALL)
-
-            for room_name, room_info in rooms.items():
-                if room_info["availability"] == "available" and room_info["room type"] == "double":
-                    print(Fore.YELLOW , (room_name) , Style.RESET_ALL)
-                    print(Fore.CYAN , (room_info) , Style.RESET_ALL)
-                    print()
-
-            show_exelences = input("Do you want to see the exelences of this room?  yes/no : ")
-            if show_exelences == "yes":
-                print(Fore.MAGENTA + "======== DOUBLE ROOM EXELENCES ========" + Style.RESET_ALL)
-                print()
-                exelences = {
-                    "1- Capacity" : "2 Guests",
-                    "2- Bed" : "Double Bed",
-                    "3- Bathroom" : "Private",
-                    "4- TV" : "Smart TV ",
-                    "5- WI-FI" : "Free",
-                    "6- Air Condition" : "Yes",
-                    "7- Desk" : "Yes",
-                    "8- Wardrob" : "Large",
-                    "9- Mini Bar" : "Available",
-                    "10- Room Service" : "Available",
-                    "11- Breakfast" : "Optional",
-                    "12- View" : "City View",
-                    "13- Price" : "80$ / night"
-                }
-
-                for feature, value in exelences.items():
-                    print(feature, ":", value)
-
-                quations()
-
-## now, i finished showing quation of the "double room"
-# i will work on the third room(VIP):
-
-        elif how_is_the_room == "VIP":
-            print()
-
-            print(Fore.BLUE + "======== VIP ROOM ========" + Style.RESET_ALL)
-            print() 
-
-            for room_name, room_info in rooms.items():
-                if room_info["availability"] == "available" and room_info["room type"] == "VIP":
-                    print(Fore.YELLOW , (room_name) , Style.RESET_ALL)
-                    print(Fore.CYAN , (room_info) , Style.RESET_ALL)
-                    print("-" * 60)
-                    print()
-
-                show_exelences = input("Do you want to see what did you got when you book this room?  yes/no: ")
-                if show_exelences == "yes":
-                    print()
-
-                    print(Fore.MAGENTA + "======== EXELANCES VIP ROOM ========" + Style.RESET_ALL)
-                    print()
-
-                    exelences = {
-                        "Capacity" : "1 - 2 Guests",
-                        "Bed" : "King Size",
-                        "Bathroom" : "Luxery",
-                        "TV" : "Smart TV",
-                        "WI-FI" : "Free",
-                        "Air Condition" : "Yes",
-                        "Mini Bar" : "Included", 
-                        "Safe" : "Yes",
-                        "Room Service" : "24/7",
-                        "Breakfast" : "Included",
-                        "View" : "Premium View",
-                        "Price" : "150$ / night"        
-                    }
-
-                    for feature, value in exelences.items():
-                        print(feature, ":", value)
-
-                    print()
-
-                    quations()
-
-### i finished the third room options, and now i'll make the fourth room:; (suite room).
-                        
-
-        elif how_is_the_room == "suite":
-            print()
-
-            print(Fore.BLUE + "==== SUITE ROOM ====" + Style.RESET_ALL)
-            print()
-
-            for room_name, room_info in rooms.items():
-                if room_info["availability"] == "available" and room_info["room type"] == "suite":
-                    print(Fore.YELLOW , (room_name) , Style.RESET_ALL)
-                    print(Fore.CYAN , (room_info) , Style.RESET_ALL)
-                    print()
-
-                    show_exelences = input("Do you want to see what did you got when you book this room  yes/no:  ")
-                    if show_exelences == "yes":
-                        print()
-
-                        print(Fore.MAGENTA + "======== SUITE ROOM EXELENCES =======" + Style.RESET_ALL)
-                        print()
-
-                        exelences = {
-                            "Capacity" : "2 - 4 Guests",
-                            "Bed" : "King Size",
-                            "Rooms" : "Bedroom + Living",
-                            "Bathroom" : "Luxery",
-                            "TV" : "2 Smart TVs",
-                            "WI-FI" : "Free",
-                            "Air Condition" : "Yes",
-                            "Sofa" : "Yes",
-                            "Mini Bar" : "Included",
-                            "Room Service" : "24/7",
-                            "Breakfast" : "Included",
-                            "View" : "Premium View",
-                            "Price" : "220$ / night"
-                        }
-
-                        for feature, value in exelences.items():
-                            print(feature, ":", value)
-                        print()
-
-                        quations()
-
-## i fished the fourth room options. I hope it will works:
-
-        elif how_is_the_room == "suite VIP":
-            print()
-
-            print(Fore.BLUE + "==== SUITE VIP ====" + Style.RESET_ALL)
-            print()
-
-
-            for room_name, room_info in rooms.items():
-                if room_info["availability"] == "available" and room_info["room type"] == "suite VIP":
-                    print(Fore.YELLOW , (room_name) , Style.RESET_ALL)
-                    print(Fore.CYAN , (room_info) , Style.RESET_ALL)
-                    print()
-
-                show_exelences = input("Do you want to see what did you got when you book this room?  yes/no: ")
-                if show_exelences == "yes":
-                    print()
-                    print(Fore.MAGENTA + "======== SUITE VIP EXELANCES ROOM ========" +Style.RESET_ALL)
-                    print()
-
-                    exelences = {
-                        "Capacity" : "2 - 4 Guests",
-                        "Bed" : "King Size",
-                        "Rooms" : "Bedrooms + Living",
-                        "Bathroom" : "Luxery + Jacuzzi",
-                        "TV" : "2 Smart TVs",
-                        "WI-FI" : "Free",
-                        "Air Condition" : "Yes",
-                        "Mini Bar" : "Included",
-                        "Dining Area" : "Yes",
-                        "Room Service" : "24/7",
-                        "Concierge" : "Included",
-                        "Breakfast" : "Included",
-                        "View" : "Panaromic",
-                        "Price" : "350$ / night"
-                    }
-
-                    for feature, value in exelences.items():
-                        print(feature, ":", value)
-
-                        quations()
-
-
-                                
-show_available_rooms() 
+print("=" * 30)
+print()
+
+# Confirm Booking;;;;;:
+confirm_booking = Confirm.ask("Confirm Booking?")
+if True:
+
+with open("booking.txt", "w") as file: 
+print()
+
+# I will just make here a progresse bar, its not a logical thing, its just for pristige;;
+
+with Progress() as progress:
+task = progress.add_task("Loading...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.05)
+
+## I just finished making the progress bar, don't worry if you can't do like this, just ask chat gpt for that because-
+#its not a logic thing or somthing important, its just for make it look beatifule;;
+print()
+
+name = Prompt.ask("Costumer Name") 
+phone = IntPrompt.ask("Phone Number")
+check_in = IntPrompt.ask("Check-in Date")
+check_out = IntPrompt.ask("Check-out Date")
+nights = check_out - check_in
+price = rooms[choose_a_room]["price"] * nights
+
+rooms[choose_a_room]["availability"] = "booked"
+
+# doing progress again:;
+#
+with Progress() as progress:
+task = progress.add_task("Booking...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.03)
+## finished the progress bar;;;
+#
+print(choose_a_room, "Has been booked succesfully!")
+
+file.write(f"{name} | str{phone} | str{check_in} | str{check_out} | {choose_a_room} | str{nights} | str{price}")
+def booking_summary():
+table = Table(title="BOOKING SUMMARY")
+
+table.add_column("Name")
+table.add_column("Phone Number")
+table.add_column("Check-in Date")
+table.add_column("Check-out Date")
+table.add_column("Room Number")
+table.add_column("Nights")
+table.add_column("Total Price")
+
+table.add_row( name, str(phone), str(check_in), str(check_out), str(choose_a_room), str(nights), str(price) )
+
+console.print(table)
+booking_summary()
+elif confirm_booking == "no":
+main_menu()
+book_a_room()
+
+elif book_a_room_ == "n":
+print()
+print("=" * 40)
+
+main_menu() 
+show_available_rooms()
+
+## finished the show available rooms, and going to book a room:;
+## starting;;...
+
+def book_a_room():
+console.print(
+Panel(" BOOK A ROOM")
+)
+print() 
+
+guest_number = int(input("Number of Guests: ")) 
+print()
+
+if guest_number == 1:
+print()
+print("Available rooms for you: ")
+
+for room_name, room_info in rooms.items():
+if room_info.get("availability") == "available":
+print("-", room_name, "'", room_info.get("type_room"), "'")
+
+elif guest_number == 2 or guest_number == 3:
+print()
+print("Available rooms for you: ")
+
+for room_name, room_info in rooms.items():
+if room_info.get("availability") == "available" and (room_info.get("capacity") == 2 or room_info.get("capacity") == 3): 
+print("-", room_name, "'", room_info.get("type_room"), "'")
+
+elif guest_number == 3 or guest_number == 4 :
+print()
+print("Available rooms for you: ")
+
+for room_name, room_info in rooms.items():
+if room_info.get("availability") == "available" and (room_info.get("capacity") == 3 or room_info.get("capacity") == 4):
+print("-", room_name, "'", room_info.get("type_room"), "'")
+
+else:
+print("Sorry, they are not a room with this capacity of guests;")
+exit()
+main_menu()
+
+print()
+
+choose_a_room = input("Choose a Room: ")
+print()
+
+for room_name, room_info in rooms.items():
+if choose_a_room == room_name :
+print("=" * 25, " ROOM DETAILS ", "=" * 25) 
+print()
+
+for room_name, room_info in rooms.items():
+for feature, value in room_info.items():
+if choose_a_room == room_name:
+print(f"{feature} : {value}")
+
+print("=" * 67)
+print()
+
+# Confirm Booking;;;;;:
+confirm_booking = Confirm.ask("Confirm Booking?")
+if confirm_booking == "no":
+main_menu()
+
+elif True:
+
+with open("booking.txt", "w") as file: 
+print()
+
+# I will just make here a progresse bar, its not a logical thing, its just for pristige;;
+
+with Progress() as progress:
+task = progress.add_task("Loading...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.05)
+
+## I just finished making the progress bar, don't worry if you can't do like this, just ask chat gpt for that because-
+#its not a logic thing or somthing important, its just for make it look beatifule;;
+print()
+
+name = Prompt.ask("Costumer Name") 
+phone = IntPrompt.ask("Phone Number")
+check_in = IntPrompt.ask("Check-in Date")
+check_out = IntPrompt.ask("Check-out Date")
+nights = check_out - check_in
+price = rooms[choose_a_room]["price"] * nights
+
+rooms[choose_a_room]["availability"] = "booked"
+
+# doing progress again:;
+#
+with Progress() as progress:
+task = progress.add_task("Booking...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.03)
+## finished the progress bar;;;
+#
+print(choose_a_room, "Has been booked succesfully!")
+
+file.write(f"{name} | str{phone} | str{check_in} | str{check_out} | {choose_a_room} | str{nights} | str{price}")
+def booking_summary():
+table = Table(title="BOOKING SUMMARY")
+
+table.add_column("Name")
+table.add_column("Phone Number")
+table.add_column("Check-in Date")
+table.add_column("Check-out Date")
+table.add_column("Room Number")
+table.add_column("Nights")
+table.add_column("Total Price")
+
+table.add_row( name, str(phone), str(check_in), str(check_out), str(choose_a_room), str(nights), str(price) )
+
+console.print(table)
+booking_summary()
+
+print()
+print("=" * 30)
+main_menu()
+
+book_a_room()
+
+## okay, I finished the secound choice (Book a Room). It's very hard damn.
+# 3rd choice: Cancel Booking;
+
+def cancel_booking():
+
+console.print(
+Panel(" CANCEL BOOKING")
+)
+
+with open("booking.txt", "r") as file:
+for line in file:
+
+data = line.strip().split(" | ")
+
+name = data[0]
+phone = data[1]
+check_in = data[2]
+check_out = data[3]
+choose_a_room = data[4]
+nights = data[5]
+price = data[6]
+
+confirm_cancling = Confirm.ask("Confirm Cancelling booking?")
+if confirm_cancling:
+print()
+
+## doing the bar progress agian ;;
+with Progress() as progress:
+task = progress.add_task("Cancelling Booking...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.02)
+
+##finished the bar progress logical;
+
+rooms[choose_a_room]["availability"] = "available"
+print(choose_a_room, "Turned to available room successfuly!")
+print()
+## updating...---------------------------------------------------------
+##
+print("=" * 30)
+room_info = rooms.get(choose_a_room)
+
+if room_info:
+for feature, value in room_info.items():
+print(f"{feature} : {value}")
+
+else:
+print("Sorry, no room found")
+
+print("=" * 30)
+main_menu()
+print("=" * 30)
+## finished.;;----------------------------------------------------------
+
+cancel_booking()
+
+## finished the fonction of 'cancel booking', so ow i'm just gona make another fonction
+## starting the 'check-in guest' now;;
+def check_in_guest():
+
+console.print(
+Panel(" CHECK-IN GUEST")
+)
+
+with open("booking.txt", "r") as file:
+for line in file:
+
+data = line.strip().split(" | ")
+name = data[0]
+phone = data[1]
+check_in = data[2]
+check_out = data[3]
+choose_a_room = data[4]
+nights = data[5]
+price = data[6]
+
+confirm_check_in = Confirm.ask("Check-in? ")
+if confirm_check_in:
+print()
+
+# the progress bar;
+
+with Progress() as progress:
+task = progress.add_task("Check-in...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.02)
+
+## finished the bar progress
+rooms[choose_a_room]["availability"] = "Included"
+print(choose_a_room, "Turned to Included successfuly!")
+print()
+## updating and printing the 'availability' of the room choosen by the user;;
+##----------------------------------------------------------------------------------
+print("=" * 30)
+room_info = rooms.get(choose_a_room)
+
+if room_info:
+for feature, value in room_info.items():
+print(f"{feature} : {value}")
+
+else:
+print("Sorry, no room found")
+
+print("=" * 30)
+main_menu()
+
+## finished--------------------------------------------------------------------------
+check_in_guest() 
+
+## finished the 'check-in guest' ;;
+## starting the 'check out guest' ;; 
+
+def check_out_guest():
+console.print(
+    Panel(" Check-out Guest")
+)
+
+print()
+with open("booking.txt", "r") as file:
+for line in file:
+
+data = line.strip().split(" | ")
+name = data[0]
+phone = data[1]
+check_in = data[2]
+check_out = data[3]
+choose_a_room = data[4]
+nights = data[5]
+price = data[6]
+
+confirm_check_out = Confirm.ask("Check-out? ")
+if confirm_check_out:
+print()
+
+## starting the progress bar;;
+
+with Progress() as progress:
+task = progress.add_task("Check-out...", total=100)
+
+while not progress.finished:
+progress.update(task, advance=1)
+time.sleep(0.02)
+## finished the progress bar;;
+
+rooms[choose_a_room]["availability"] = "Available"
+print(choose_a_room, "Turned to Available successfuly!")
+print()
+##printing the room with updating the 'availability'
+##-------------------------------------------------------------
+print("=" * 30)
+room_info = rooms.get(choose_a_room)
+
+if room_info:
+for feature, value in room_info.items():
+print(f"{feature} : {value}")
+
+else:
+print("Sorry, no room found") 
+main_menu()
+
+print("=" * 30)
+## finished-----------------------------------------------------
+
+main_menu()
+check_out_guest()
+
+## finished the 'check-out guest', and now I will start the new option;;
+## search for a guest: /start;
+def search_for_a_guest():
+print()
+
+console.print(
+Panel(" SEARCH FOR A GUEST")
+)
+
+print()
+
+Name = Prompt.ask("Name:")
+Phone = Prompt.ask("Phone: ")
+
+with open("booking.txt", "r") as file:
+
+for line in file:
+data = line.strip().split(" | ")
+
+name = data[0]
+phone = data[1]
+check_in = data[2]
+check_out = data[3]
+choose_a_room = data[4]
+nights = data[5]
+price = data[6]
+
+for informations in data:
+if (Name == data[0] and Phone == data[1]):
+for feature, key in data():
+print(f"{feature} : {key}")
+
+else:
+print("No Guest Found!!")
+
+print()
+print("=" * 30)
+main_menu()
+search_for_a_guest()
+## finished the 'search for a guest';;
+## starting the choice of 'Update Booking'
+
+def update_booking():
+console.print(
+Panel(" UPDATE BOOKING")
+)
+
+print()
+
+update_booking = Prompt.ask("Update Booking? [y/n] ")
+if update_booking == "y":
+print()
+
+search_room = input("Enetr te name of the room you want to change it: ")
+with open("booking.txt", "r") as file:
+
+for line in file:
+data = line.strip().split(" | ")
+
+name = data[0]
+phone = data[1]
+check_in = data[2]
+check_out = data[3]
+
+file.readlines()
+if search_room == name:
+what_do_you_want = input("what do you want to change it? ")
+
+if what_do_you_want == "name":
+new_name = input("Enter the new name: ")
+data[0] = new_name
+
+elif what_do_you_want == "phone":
+new_phone_number = input("Enter the new phone number: ")
+data[1] = new_phone_number
+
+elif what_do_you_want == "check-in":
+new_checkIn_date = input("Enter the new check-in date: ")
+data[2] = new_checkIn_date
+
+elif what_do_you_want == "check-out":
+new_checkOut_date = input("Enter the new check-out date: ")
+data[3] = new_checkOut_date
+
+else:
+print("Sorry no informations found!")
+print()
+print("=" * 30)
+main_menu()
+
+with open("booking.txt", "w") as file:
+file.write("booking.txt")
+
+print(name, phone, check_in, check_out)
+elif update_booking == "n":
+print()
+print("=" * 30)
+main_menu()
+
+update_booking()
+## finished the update booking successfully!
+# starting the new and the last option;; 'Exit'
+
+def exit_programme():
+console.print(
+Panel(" EXIT")
+)
+
+print()
+
+confirme_exit = input("Confirme Exit? [y/n]: ")
+if confirme_exit == "n":
+main_menu()
+
+elif confirme_exit == "y":
+print("Thank you Sir and Have a great day!")
+exit()
+
+exit_programme()
+
+while True:
+print("1. Show Available Rooms")
+print("2. Book a Room")
+print("3. Cancel Booking")
+print("4. Check-in Guest")
+print("5. Check-out Guest")
+print("6. Search For a Guest")
+print("7. Update Booking")
+print("8. Exit")
+
+choice = input("Enter your choice: ")
+
+if choice == "1":
+show_available_rooms()
+
+elif choice == "2":
+book_a_room()
+
+elif choice == "3":
+cancel_booking()
+
+elif choice == "4":
+check_in_guest()
+
+elif choice == "5":
+check_out_guest()
+
+elif choice == "6":
+search_for_a_guest()
+
+elif choice == "7":
+update_booking()
+
+elif choice == "8":
+exit_programme()
